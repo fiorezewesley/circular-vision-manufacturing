@@ -49,6 +49,14 @@
       text-decoration: none;
     }
 
+    code {
+      color: #d7ffe4;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 4px 7px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
     .container {
       width: min(100% - 32px, var(--max));
       margin: 0 auto;
@@ -464,6 +472,28 @@
       border-bottom: none;
     }
 
+    .video-card {
+      margin-top: 28px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .video-card video {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+      background: #000000;
+    }
+
+    .video-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 14px;
+    }
+
     .cta {
       border: 1px solid rgba(74, 222, 128, 0.24);
       background: linear-gradient(135deg, rgba(74, 222, 128, 0.16), rgba(56, 189, 248, 0.12));
@@ -535,6 +565,7 @@
     }
   </style>
 </head>
+
 <body>
   <nav class="navbar">
     <div class="container nav-content">
@@ -542,9 +573,11 @@
         <span class="brand-mark">CV</span>
         <span>Circular Vision</span>
       </a>
+
       <div class="nav-links">
         <a href="#solution">Solução</a>
         <a href="#workflow">Funcionamento</a>
+        <a href="#demo">Demonstração</a>
         <a href="#industry">Indústria 4.0</a>
         <a href="#impact">Impacto</a>
         <a href="#run" class="button button-secondary">Executar PoC</a>
@@ -557,14 +590,23 @@
       <div class="container hero-grid">
         <div>
           <div class="eyebrow">PoC de IA aplicada à sustentabilidade industrial</div>
-          <h1><span class="gradient-text">Triagem visual inteligente</span> para economia circular na manufatura.</h1>
+
+          <h1>
+            <span class="gradient-text">Triagem visual inteligente</span>
+            para economia circular na manufatura.
+          </h1>
+
           <p class="hero-text">
-            Circular Vision transforma imagens de fluxos de materiais e resíduos em decisões operacionais de circularidade. A solução combina visão computacional, aprendizado de máquina e indicadores de sustentabilidade para apoiar reciclagem, logística reversa, tratamento especial e redução de envio a aterro.
+            Circular Vision transforma imagens de fluxos de materiais e resíduos em decisões operacionais de circularidade.
+            A solução combina visão computacional, aprendizado de máquina e indicadores de sustentabilidade para apoiar
+            reciclagem, logística reversa, tratamento especial e redução de envio a aterro.
           </p>
+
           <div class="hero-actions">
             <a class="button button-primary" href="#solution">Conhecer a solução</a>
-            <a class="button button-secondary" href="#run">Como executar</a>
+            <a class="button button-secondary" href="#demo">Ver demonstração</a>
           </div>
+
           <div class="hero-badges">
             <span class="badge">Python</span>
             <span class="badge">Computer Vision</span>
@@ -583,24 +625,29 @@
             </div>
             <span>Operational dashboard</span>
           </div>
+
           <div class="kpi-grid">
             <div class="kpi">
               <strong>120</strong>
               <span>Itens analisados</span>
             </div>
+
             <div class="kpi">
               <strong>74.2</strong>
               <span>Índice médio de circularidade</span>
             </div>
+
             <div class="kpi">
               <strong>23.6 kg</strong>
               <span>Potencial de redução de aterro</span>
             </div>
+
             <div class="kpi">
               <strong>8</strong>
               <span>Alertas críticos</span>
             </div>
           </div>
+
           <div class="inspection-list">
             <div class="inspection-item">
               <div class="material-icon">P</div>
@@ -610,6 +657,7 @@
               </div>
               <span class="status medium">média</span>
             </div>
+
             <div class="inspection-item">
               <div class="material-icon">B</div>
               <div>
@@ -618,6 +666,7 @@
               </div>
               <span class="status high">alta</span>
             </div>
+
             <div class="inspection-item">
               <div class="material-icon">M</div>
               <div>
@@ -636,29 +685,36 @@
         <div class="section-heading">
           <h2>De classificação visual a decisão operacional.</h2>
           <p>
-            A proposta vai além de reconhecer imagens. Cada predição é convertida em uma recomendação de economia circular e em indicadores para equipes de manufatura, qualidade, sustentabilidade e melhoria contínua.
+            A proposta vai além de reconhecer imagens. Cada predição é convertida em uma recomendação de economia circular
+            e em indicadores para equipes de manufatura, qualidade, sustentabilidade e melhoria contínua.
           </p>
         </div>
+
         <div class="cards-grid">
           <article class="card">
             <span class="tag">Problema</span>
             <h3>Triagem manual inconsistente</h3>
             <p>
-              Fluxos de papel, papelão, plástico, vidro, metal, orgânicos e materiais especiais podem ser direcionados incorretamente, reduzindo a eficiência da reciclagem.
+              Fluxos de papel, papelão, plástico, vidro, metal, orgânicos e materiais especiais podem ser direcionados
+              incorretamente, reduzindo a eficiência da reciclagem.
             </p>
           </article>
+
           <article class="card">
             <span class="tag">Solução</span>
             <h3>Inspeção visual com IA</h3>
             <p>
-              O sistema extrai atributos visuais das imagens, classifica o material e recomenda a destinação adequada conforme regras de circularidade.
+              O sistema extrai atributos visuais das imagens, classifica o material e recomenda a destinação adequada
+              conforme regras de circularidade.
             </p>
           </article>
+
           <article class="card">
             <span class="tag">Resultado</span>
             <h3>Indicadores de sustentabilidade</h3>
             <p>
-              O dashboard consolida itens analisados, índice de circularidade, potencial de redução de aterro e alertas críticos de destinação.
+              O dashboard consolida itens analisados, índice de circularidade, potencial de redução de aterro e alertas
+              críticos de destinação.
             </p>
           </article>
         </div>
@@ -669,29 +725,37 @@
       <div class="container">
         <div class="section-heading">
           <h2>Como funciona.</h2>
-          <p>Uma arquitetura simples, reprodutível e preparada para evoluir em direção a câmeras, dispositivos de borda e sistemas industriais.</p>
+          <p>
+            Uma arquitetura simples, reprodutível e preparada para evoluir em direção a câmeras, dispositivos de borda
+            e sistemas industriais.
+          </p>
         </div>
+
         <div class="workflow">
           <div class="workflow-step">
             <div class="step-number">1</div>
             <h3>Aquisição</h3>
             <p>Imagens de materiais e resíduos são capturadas em pontos de inspeção ou triagem.</p>
           </div>
+
           <div class="workflow-step">
             <div class="step-number">2</div>
             <h3>Extração visual</h3>
             <p>O pipeline extrai histogramas de cor, textura, bordas e descritores HOG.</p>
           </div>
+
           <div class="workflow-step">
             <div class="step-number">3</div>
             <h3>Classificação</h3>
             <p>Modelos de aprendizado de máquina classificam o fluxo visual em uma categoria de material.</p>
           </div>
+
           <div class="workflow-step">
             <div class="step-number">4</div>
             <h3>Decisão circular</h3>
             <p>A classe prevista é traduzida em reciclagem, compostagem, logística reversa ou descarte controlado.</p>
           </div>
+
           <div class="workflow-step">
             <div class="step-number">5</div>
             <h3>Dashboard</h3>
@@ -701,14 +765,41 @@
       </div>
     </section>
 
+    <section id="demo">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Demonstração da PoC em funcionamento.</h2>
+          <p>
+            O vídeo apresenta a solução sendo executada na prática: captura por câmera, envio manual de imagem,
+            classificação visual do material, recomendação de destinação circular e visualização dos indicadores
+            operacionais no dashboard.
+          </p>
+        </div>
+
+        <div class="video-card">
+          <video controls muted playsinline preload="metadata">
+            <source src="assets/videos/demo_poc_nestle_wesleyfioreze.mp4" type="video/mp4">
+            Seu navegador não suporta a reprodução de vídeo.
+          </video>
+        </div>
+
+        <p class="video-note">
+          Para publicação no GitHub Pages, o vídeo deve estar salvo no repositório em
+          <code>assets/videos/demo_poc_nestle_wesleyfioreze.mp4</code>.
+        </p>
+      </div>
+    </section>
+
     <section id="industry">
       <div class="container split">
         <div class="section-heading">
           <h2>Alinhado ao escopo de inovação, tecnologia e indústria.</h2>
           <p>
-            Circular Vision foi desenhado para demonstrar uso aplicado de Python, visão computacional, inteligência artificial, análise de dados e integração conceitual com sensores e câmeras em ambiente de manufatura.
+            Circular Vision foi desenhado para demonstrar uso aplicado de Python, visão computacional, inteligência
+            artificial, análise de dados e integração conceitual com sensores e câmeras em ambiente de manufatura.
           </p>
         </div>
+
         <div class="table-card">
           <table>
             <thead>
@@ -718,27 +809,32 @@
                 <th>Função</th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <td>Aquisição</td>
                 <td>Câmeras ou imagens de inspeção</td>
                 <td>Capturar evidências visuais dos fluxos de materiais.</td>
               </tr>
+
               <tr>
                 <td>Processamento</td>
                 <td>Python, OpenCV, scikit-image</td>
                 <td>Converter imagens em atributos numéricos.</td>
               </tr>
+
               <tr>
                 <td>IA</td>
                 <td>KNN e Random Forest</td>
                 <td>Classificar resíduos e materiais automaticamente.</td>
               </tr>
+
               <tr>
                 <td>Decisão</td>
                 <td>Regras de economia circular</td>
                 <td>Recomendar destinação sustentável.</td>
               </tr>
+
               <tr>
                 <td>Gestão</td>
                 <td>Dashboard Streamlit</td>
@@ -754,19 +850,28 @@
       <div class="container">
         <div class="section-heading">
           <h2>Indicadores para sustentabilidade operacional.</h2>
-          <p>O produto gera uma visão executiva e operacional dos fluxos analisados, permitindo identificar oportunidades de reciclagem, redução de descarte e atenção a materiais especiais.</p>
+          <p>
+            O produto gera uma visão executiva e operacional dos fluxos analisados, permitindo identificar oportunidades
+            de reciclagem, redução de descarte e atenção a materiais especiais.
+          </p>
         </div>
+
         <div class="cards-grid">
           <article class="card">
             <span class="tag">Circularidade</span>
             <h3>Índice médio de circularidade</h3>
             <p>Acompanha a qualidade potencial da destinação recomendada para os materiais classificados.</p>
           </article>
+
           <article class="card">
             <span class="tag">Aterro</span>
             <h3>Redução de envio a aterro</h3>
-            <p>Estima a massa de materiais que pode ser desviada de aterros por reciclagem, recuperação ou tratamento adequado.</p>
+            <p>
+              Estima a massa de materiais que pode ser desviada de aterros por reciclagem, recuperação ou tratamento
+              adequado.
+            </p>
           </article>
+
           <article class="card">
             <span class="tag">Risco</span>
             <h3>Alertas críticos</h3>
@@ -782,11 +887,21 @@
           <div>
             <h2>PoC reprodutível</h2>
             <p>
-              O projeto inclui download do dataset, treinamento do modelo, inferência em lote, geração de relatório CSV e dashboard para demonstração da solução.
+              O projeto inclui download do dataset, treinamento do modelo, inferência em lote, geração de relatório CSV
+              e dashboard para demonstração da solução.
             </p>
           </div>
-          <a class="button button-primary" href="https://github.com/fiorezewesley/circular-vision-manufacturing" target="_blank" rel="noreferrer">Ver repositório</a>
+
+          <a
+            class="button button-primary"
+            href="https://github.com/fiorezewesley/circular-vision-manufacturing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ver repositório
+          </a>
         </div>
+
         <div class="table-card" style="margin-top: 22px;">
           <table>
             <thead>
@@ -795,27 +910,33 @@
                 <th>Comando</th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <td>Ambiente virtual</td>
                 <td><code>python -m venv .venv</code></td>
               </tr>
+
               <tr>
                 <td>Dependências</td>
                 <td><code>pip install -r requirements.txt</code></td>
               </tr>
+
               <tr>
                 <td>Dataset</td>
                 <td><code>python scripts/download_dataset.py</code></td>
               </tr>
+
               <tr>
                 <td>Treinamento</td>
                 <td><code>python train.py --dataset-dir "&lt;dataset_root&gt;" --max-per-class 50</code></td>
               </tr>
+
               <tr>
                 <td>Inferência em lote</td>
                 <td><code>python batch_inference.py --dataset-dir "&lt;dataset_root&gt;" --max-per-class 10</code></td>
               </tr>
+
               <tr>
                 <td>Dashboard</td>
                 <td><code>streamlit run app/dashboard.py</code></td>
