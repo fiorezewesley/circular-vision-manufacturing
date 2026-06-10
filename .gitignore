@@ -1,0 +1,46 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dataset and generated data
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Trained models
+models/*
+!models/.gitkeep
+
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+
+# Zip files
+*.zip
+
+# Duplicate GitHub Pages extracted folder
+circular_vision_pages/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Logs
+*.log
+git

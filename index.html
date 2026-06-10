@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circular Vision | IA para Manufatura Sustentável</title>
+  <meta name="description" content="Circular Vision é uma prova de conceito de visão computacional e IA para apoiar decisões de economia circular em operações industriais." />
+  <style>
+    :root {
+      --bg: #07130f;
+      --bg-soft: #0d1f18;
+      --panel: rgba(255, 255, 255, 0.075);
+      --panel-strong: rgba(255, 255, 255, 0.12);
+      --text: #f4f8f5;
+      --muted: #b6c6be;
+      --primary: #4ade80;
+      --primary-dark: #22c55e;
+      --accent: #38bdf8;
+      --warning: #fbbf24;
+      --danger: #fb7185;
+      --border: rgba(255, 255, 255, 0.14);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max: 1180px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(74, 222, 128, 0.22), transparent 34rem),
+        radial-gradient(circle at 70% 8%, rgba(56, 189, 248, 0.16), transparent 30rem),
+        linear-gradient(180deg, #06110d 0%, #081a13 46%, #06110d 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 19, 15, 0.74);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.1rem;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      color: #052015;
+      font-weight: 900;
+      box-shadow: 0 14px 36px rgba(74, 222, 128, 0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #052015;
+      box-shadow: 0 14px 38px rgba(74, 222, 128, 0.24);
+    }
+
+    .button-secondary {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 90px 0 66px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.24);
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 5.35rem);
+      line-height: 0.96;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff, #9fffc2 45%, #7dd3fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.16rem;
+      max-width: 690px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.055);
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+    }
+
+    .product-card {
+      position: relative;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045));
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      inset: -80px -80px auto auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(74, 222, 128, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .window-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.83rem;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--panel-strong);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .kpi {
+      border: 1px solid var(--border);
+      background: rgba(3, 14, 10, 0.42);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1.55rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 2px;
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .inspection-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .inspection-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px;
+      border-radius: 16px;
+    }
+
+    .material-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(74, 222, 128, 0.14);
+      border: 1px solid rgba(74, 222, 128, 0.18);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .inspection-item p {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .inspection-item small {
+      color: var(--muted);
+    }
+
+    .status {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border: 1px solid var(--border);
+    }
+
+    .status.low {
+      color: var(--primary);
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .status.medium {
+      color: var(--warning);
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .status.high {
+      color: var(--danger);
+      background: rgba(251, 113, 133, 0.1);
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 24px;
+      min-height: 210px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-block;
+      color: #052015;
+      background: var(--primary);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .workflow-step {
+      position: relative;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 170px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .workflow-step h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .workflow-step p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .table-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 15px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .cta {
+      border: 1px solid rgba(74, 222, 128, 0.24);
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.16), rgba(56, 189, 248, 0.12));
+      border-radius: 30px;
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .split,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid,
+      .workflow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 58px;
+      }
+
+      .cards-grid,
+      .workflow,
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="#top" class="brand" aria-label="Circular Vision">
+        <span class="brand-mark">CV</span>
+        <span>Circular Vision</span>
+      </a>
+      <div class="nav-links">
+        <a href="#solution">Solução</a>
+        <a href="#workflow">Funcionamento</a>
+        <a href="#industry">Indústria 4.0</a>
+        <a href="#impact">Impacto</a>
+        <a href="#run" class="button button-secondary">Executar PoC</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">PoC de IA aplicada à sustentabilidade industrial</div>
+          <h1><span class="gradient-text">Triagem visual inteligente</span> para economia circular na manufatura.</h1>
+          <p class="hero-text">
+            Circular Vision transforma imagens de fluxos de materiais e resíduos em decisões operacionais de circularidade. A solução combina visão computacional, aprendizado de máquina e indicadores de sustentabilidade para apoiar reciclagem, logística reversa, tratamento especial e redução de envio a aterro.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#solution">Conhecer a solução</a>
+            <a class="button button-secondary" href="#run">Como executar</a>
+          </div>
+          <div class="hero-badges">
+            <span class="badge">Python</span>
+            <span class="badge">Computer Vision</span>
+            <span class="badge">Machine Learning</span>
+            <span class="badge">Data Analytics</span>
+            <span class="badge">Industry 4.0</span>
+          </div>
+        </div>
+
+        <div class="product-card" aria-label="Dashboard preview">
+          <div class="window-top">
+            <div class="dots">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <span>Operational dashboard</span>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi">
+              <strong>120</strong>
+              <span>Itens analisados</span>
+            </div>
+            <div class="kpi">
+              <strong>74.2</strong>
+              <span>Índice médio de circularidade</span>
+            </div>
+            <div class="kpi">
+              <strong>23.6 kg</strong>
+              <span>Potencial de redução de aterro</span>
+            </div>
+            <div class="kpi">
+              <strong>8</strong>
+              <span>Alertas críticos</span>
+            </div>
+          </div>
+          <div class="inspection-list">
+            <div class="inspection-item">
+              <div class="material-icon">P</div>
+              <div>
+                <p>Plástico</p>
+                <small>Enviar para fluxo de reciclagem com verificação de contaminação</small>
+              </div>
+              <span class="status medium">média</span>
+            </div>
+            <div class="inspection-item">
+              <div class="material-icon">B</div>
+              <div>
+                <p>Bateria</p>
+                <small>Logística reversa ou tratamento especial certificado</small>
+              </div>
+              <span class="status high">alta</span>
+            </div>
+            <div class="inspection-item">
+              <div class="material-icon">M</div>
+              <div>
+                <p>Metal</p>
+                <small>Enviar para fluxo de reciclagem de metais</small>
+              </div>
+              <span class="status low">baixa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="container">
+        <div class="section-heading">
+          <h2>De classificação visual a decisão operacional.</h2>
+          <p>
+            A proposta vai além de reconhecer imagens. Cada predição é convertida em uma recomendação de economia circular e em indicadores para equipes de manufatura, qualidade, sustentabilidade e melhoria contínua.
+          </p>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <span class="tag">Problema</span>
+            <h3>Triagem manual inconsistente</h3>
+            <p>
+              Fluxos de papel, papelão, plástico, vidro, metal, orgânicos e materiais especiais podem ser direcionados incorretamente, reduzindo a eficiência da reciclagem.
+            </p>
+          </article>
+          <article class="card">
+            <span class="tag">Solução</span>
+            <h3>Inspeção visual com IA</h3>
+            <p>
+              O sistema extrai atributos visuais das imagens, classifica o material e recomenda a destinação adequada conforme regras de circularidade.
+            </p>
+          </article>
+          <article class="card">
+            <span class="tag">Resultado</span>
+            <h3>Indicadores de sustentabilidade</h3>
+            <p>
+              O dashboard consolida itens analisados, índice de circularidade, potencial de redução de aterro e alertas críticos de destinação.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Como funciona.</h2>
+          <p>Uma arquitetura simples, reprodutível e preparada para evoluir em direção a câmeras, dispositivos de borda e sistemas industriais.</p>
+        </div>
+        <div class="workflow">
+          <div class="workflow-step">
+            <div class="step-number">1</div>
+            <h3>Aquisição</h3>
+            <p>Imagens de materiais e resíduos são capturadas em pontos de inspeção ou triagem.</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">2</div>
+            <h3>Extração visual</h3>
+            <p>O pipeline extrai histogramas de cor, textura, bordas e descritores HOG.</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">3</div>
+            <h3>Classificação</h3>
+            <p>Modelos de aprendizado de máquina classificam o fluxo visual em uma categoria de material.</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">4</div>
+            <h3>Decisão circular</h3>
+            <p>A classe prevista é traduzida em reciclagem, compostagem, logística reversa ou descarte controlado.</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">5</div>
+            <h3>Dashboard</h3>
+            <p>Indicadores operacionais apoiam tomada de decisão e melhoria contínua.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="industry">
+      <div class="container split">
+        <div class="section-heading">
+          <h2>Alinhado ao escopo de inovação, tecnologia e indústria.</h2>
+          <p>
+            Circular Vision foi desenhado para demonstrar uso aplicado de Python, visão computacional, inteligência artificial, análise de dados e integração conceitual com sensores e câmeras em ambiente de manufatura.
+          </p>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Camada</th>
+                <th>Componente</th>
+                <th>Função</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aquisição</td>
+                <td>Câmeras ou imagens de inspeção</td>
+                <td>Capturar evidências visuais dos fluxos de materiais.</td>
+              </tr>
+              <tr>
+                <td>Processamento</td>
+                <td>Python, OpenCV, scikit-image</td>
+                <td>Converter imagens em atributos numéricos.</td>
+              </tr>
+              <tr>
+                <td>IA</td>
+                <td>KNN e Random Forest</td>
+                <td>Classificar resíduos e materiais automaticamente.</td>
+              </tr>
+              <tr>
+                <td>Decisão</td>
+                <td>Regras de economia circular</td>
+                <td>Recomendar destinação sustentável.</td>
+              </tr>
+              <tr>
+                <td>Gestão</td>
+                <td>Dashboard Streamlit</td>
+                <td>Monitorar indicadores e apoiar decisões.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Indicadores para sustentabilidade operacional.</h2>
+          <p>O produto gera uma visão executiva e operacional dos fluxos analisados, permitindo identificar oportunidades de reciclagem, redução de descarte e atenção a materiais especiais.</p>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <span class="tag">Circularidade</span>
+            <h3>Índice médio de circularidade</h3>
+            <p>Acompanha a qualidade potencial da destinação recomendada para os materiais classificados.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Aterro</span>
+            <h3>Redução de envio a aterro</h3>
+            <p>Estima a massa de materiais que pode ser desviada de aterros por reciclagem, recuperação ou tratamento adequado.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Risco</span>
+            <h3>Alertas críticos</h3>
+            <p>Destaca materiais que exigem atenção especial, como baterias e fluxos de descarte controlado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="run">
+      <div class="container">
+    
+        <div class="table-card" style="margin-top: 22px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Etapa</th>
+                <th>Comando</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ambiente virtual</td>
+                <td><code>python -m venv .venv</code></td>
+              </tr>
+              <tr>
+                <td>Dependências</td>
+                <td><code>pip install -r requirements.txt</code></td>
+              </tr>
+              <tr>
+                <td>Dataset</td>
+                <td><code>python scripts/download_dataset.py</code></td>
+              </tr>
+              <tr>
+                <td>Treinamento</td>
+                <td><code>python train.py --dataset-dir "&lt;dataset_root&gt;" --max-per-class 50</code></td>
+              </tr>
+              <tr>
+                <td>Inferência em lote</td>
+                <td><code>python batch_inference.py --dataset-dir "&lt;dataset_root&gt;" --max-per-class 10</code></td>
+              </tr>
+              <tr>
+                <td>Dashboard</td>
+                <td><code>streamlit run app/dashboard.py</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <span>Circular Vision - Proof of Concept</span>
+      <span>Computer Vision, Machine Learning and Sustainability for Manufacturing</span>
+    </div>
+  </footer>
+</body>
+</html>
